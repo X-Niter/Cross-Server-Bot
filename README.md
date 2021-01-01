@@ -6,9 +6,9 @@ Supports message delete, update, lock command...
 
 ## Features
 
-- Link as many channels as you want between them.
+- Link as many channels as you want together.
 - Instant redirection of messages.
-- Support message deletion and message updating
+- Support message deletion and message updating.
 - Usage of webhooks to simulate users (good looking and easy to understand chat).
 - Support images.
 - Warn if a server supposed to be in the linked channels is not here anymore or if a webhook is falsy.
@@ -32,37 +32,32 @@ Enter your bot token and all correct information:
 
 ```js
 {
-    "token": "botToken",
-    "prefix": "c!",
+    "token": "",
     "enhancedMention": {
         "user": false,
         "role": false,
         "channel": false
     },
-    "messageDelete": true,
-    "deleteOnUpdate": true,
-    "guilds": [
+    "guilds": [ 
         {
             "name": "name",
             "identifier": "",
-            "guildID": "111111",
-            "channelID": "121212",
-            "whID": "232323",
-            "whToken": "webhookToken2323",
-            "ignore": false,
-            "ignoreBots": true,
-            "managerRoles": []
+            "guildID": "",
+            "channelID": "",
+            "whID": "",
+            "whToken": "",
+            "ignoreAll": false,
+            "ignoreBots": true
         },
         {
-            "name": "name",
+            "name": "name2",
             "identifier": "",
-            "guildID": "444444",
-            "channelID": "454545",
-            "whID": "56565656",
-            "whToken": "webhookToken5656",
-            "ignore": false,
-            "ignoreBots": true,
-            "managerRoles": []
+            "guildID": "",
+            "channelID": "",
+            "whID": "",
+            "whToken": "",
+            "ignoreAll": false,
+            "ignoreBots": true
         }
     ]
 }
