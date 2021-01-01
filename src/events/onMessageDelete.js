@@ -19,8 +19,9 @@ exports.onMessageDelete = async(botClient, network, channelsCache, msg) => {
     }
 
     const messages = channelsCache[msg.channel.id].get(msg.id);
-    for (const m of messages) {
-        m.delete().catch();
+    for (const [i, message] of messages.entries()) {
+        const channelConfig = network[message.channel.id];
+        messages[i] = await triggerWHDelete(botClient, network, channelConfig, message.id);
     }
     channelsCache[msg.channel.id].delete(msg.id);
 };

@@ -11,7 +11,7 @@ exports.setup = function (bot, config) {
     bot.prefix = config.prefix;
 
     bot.once('ready', () => {
-        console.log('Ready!');
+        console.log('I am ready!');
 
         for (const val of config.guilds) {
             const botGuild = bot.guilds.get(val.guildID);
@@ -21,19 +21,17 @@ exports.setup = function (bot, config) {
                 network[val.channelID] = val;
                 channelsCache[val.channelID] = new Map();
                 
+                var date = new Date();
                 bot.executeWebhook(val.whID, val.whToken, {
                     username: bot.user.username,
                     avatarURL: bot.user.avatarURL,
-                    content: 'Bot Ready - Cross Server system operational!',
+                    content: 'Bot started. It is: ' + date.toISOString(),
                 } );
             }
         }
     } );
 
     bot.on('messageCreate', (msg) => onMessageCreate(bot, network, channelsCache, msg) );
-    bot.on('messageUpdate', (msg, oldMsg) => onMessageUpdate(bot, network, channelsCache, config.deleteOnUpdate, msg, oldMsg) );
-    
-    if (config.messageDelete) {
-        bot.on('messageDelete', (msg) => onMessageDelete(bot, network, channelsCache, msg) );
-    }
+    bot.on('messageUpdate', (msg, oldMsg) => onMessageUpdate(bot, network, channelsCache, msg, oldMsg)); 
+    bot.on('messageDelete', (msg) => onMessageDelete(bot, network, channelsCache, msg));
 };

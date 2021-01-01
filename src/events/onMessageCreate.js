@@ -3,7 +3,6 @@
 const { deconstructMention } = require('../enhancedMention');
 const { triggerWH, setInMap, MESSAGE_LIMIT } = require('../utils');
 
-const commands = require('../commands');
 
 exports.onMessageCreate = async(botClient, network, channelsCache, msg) => {
     if (!msg.author || msg.author.discriminator === '0000' || !msg.channel.guild) {
@@ -19,18 +18,11 @@ exports.onMessageCreate = async(botClient, network, channelsCache, msg) => {
         return;
     }
 
-    if (msg.content.startsWith(botClient.prefix) && msg.member.roles.some(r => cur.managerRoles.includes(r) ) ) {
-        const args = msg.content.split(' ');
-        const label = args[0].slice(botClient.prefix.length, args[0].length);
-        const command = commands[label];
-        command(botClient, network, channelsCache, msg, args.slice(1, args.length) )
-            .then( () => console.log(`EXEC: ${label} in ${cur.name} by ${msg.author.username}`) )
-            .catch(console.log);
-        
+    if (cur.ignore) { // ignore channels if needed
         return;
     }
 
-    if (cur.ignore) { // ignore channels if needed
+    if (msg.content.includes("pinned a message to this channel. See all the pins.")) {
         return;
     }
 
@@ -52,7 +44,7 @@ exports.onMessageCreate = async(botClient, network, channelsCache, msg) => {
         if (channelConfig.channelID === msg.channel.id) {
             continue;
         }
-        messages.push(await triggerWH(botClient, network, channelConfig, cur, msg.author, fullMsg) );
+        messages.push(await triggerWH(botClient, network, channelConfig, cur, msg.author, msg.member, fullMsg) );
     }
     setInMap(channelsCache[msg.channel.id], msg.id, messages);
 };
