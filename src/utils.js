@@ -1,17 +1,18 @@
 'use strict';
 
+const { Member } = require('eris');
 const { enhanceMention } = require('./enhancedMention');
 
 exports.MESSAGE_LIMIT = 2000;
 const CACHELIMIT = 1000;
 
-exports.triggerWH = async function (bot, network, channelConfig, originConfig, user, content) {
+exports.triggerWH = async function (bot, network, channelConfig, originConfig, user, member, content) {
     const guildObj = bot.guilds.get(channelConfig.guildID);
     let message = null;
     try {
-        const username = filterUsername(user.username);
+        const authorName = member.nick ? member.nick : user.username;
         message = await bot.executeWebhook(channelConfig.whID, channelConfig.whToken, {
-            username: `${originConfig.identifier}${username}#${user.discriminator}`,
+            username: `${authorName}`,
             avatarURL: user.avatarURL,
             content: enhanceMention(content, guildObj),
             wait: true,

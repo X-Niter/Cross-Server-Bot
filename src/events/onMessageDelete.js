@@ -1,5 +1,7 @@
 'use strict';
 
+const { triggerWHDelete } = require('../utils');
+
 exports.onMessageDelete = async(botClient, network, channelsCache, msg) => {
     if (!msg.author || msg.author.discriminator === '0000' || !msg.channel.guild) {
         return;
