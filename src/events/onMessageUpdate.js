@@ -21,9 +21,10 @@ exports.onMessageUpdate = async(botClient, network, channelsCache, msg, oldMsg) 
     const attachments = msg.attachments.length > 0
         ? msg.attachments.map(a => a.url)
         : [];
+    
     const fullLength = `${attachments.join('\n')}\n${msg.content}`.length;
     const fullMsg = [...attachments, ...deconstructMention(msg.content, msg.channel.guild)];
-
+    
     if (fullLength > MESSAGE_LIMIT) {
         msg.channel.createMessage(`${msg.author.mention}: Message too long!`);
         return;

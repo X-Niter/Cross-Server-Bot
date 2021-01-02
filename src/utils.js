@@ -12,7 +12,7 @@ exports.triggerWH = async function (bot, network, channelConfig, originConfig, u
     try {
         const authorName = member.nick ? member.nick : user.username;
         message = await bot.executeWebhook(channelConfig.whID, channelConfig.whToken, {
-            username: `${authorName}`,
+            username: `${authorName} from ${originConfig.name}`,
             avatarURL: user.avatarURL,
             content: enhanceMention(content, guildObj),
             wait: true,
@@ -20,7 +20,7 @@ exports.triggerWH = async function (bot, network, channelConfig, originConfig, u
         } );
     } catch (err) {
         const errMsg = guildObj
-            ? `WebHook unavailable in ${guildObj.name}.`
+            ? `\`The last message failed to go through to ${guildObj.name}. It might be the bot's fault, or Discord being buggy.\``
             : `Guild unavailable: ${channelConfig.guildID}.`;
         
         console.log(errMsg);
@@ -35,7 +35,7 @@ exports.triggerWH = async function (bot, network, channelConfig, originConfig, u
                     username: bot.user.username,
                     avatarURL: bot.user.avatarURL,
                     content: errMsg,
-                } );
+                });
             } catch (_) {
                 // Do nothing since it would already be handled by another triggerWH
             }
@@ -60,10 +60,10 @@ exports.triggerWHEdit = async function (bot, network, channelConfig, originConfi
         const errMsg = guildObj
             ? `\`The last edit failed to go through to ${guildObj.name}. It might be the bot's fault, or Discord being buggy.\``
             : `Guild unavailable: ${channelConfig.guildID}.`;
-
+        
         console.log(errMsg);
         console.log(err);
-
+        
         for (const c in network) {
             if (network[c].guildID === channelConfig.guildID) {
                 continue;
@@ -91,10 +91,10 @@ exports.triggerWHDelete = async function (bot, network, channelConfig, messageID
         const errMsg = guildObj
             ? `\`The last delete failed to go through to ${guildObj.name}. It might be the bot's fault, or Discord being buggy.\``
             : `Guild unavailable: ${channelConfig.guildID}.`;
-
+        
         console.log(errMsg);
         console.log(err);
-
+        
         for (const c in network) {
             if (network[c].guildID === channelConfig.guildID) {
                 continue;

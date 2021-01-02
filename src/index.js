@@ -20,18 +20,21 @@ exports.setup = function (bot, config) {
             } else {
                 network[val.channelID] = val;
                 channelsCache[val.channelID] = new Map();
-                
+
+                /*
                 var date = new Date();
+
                 bot.executeWebhook(val.whID, val.whToken, {
                     username: bot.user.username,
                     avatarURL: bot.user.avatarURL,
                     content: 'Bot started. It is: ' + date.toISOString(),
                 } );
+                */
             }
         }
     } );
 
-    bot.on('messageCreate', (msg) => onMessageCreate(bot, network, channelsCache, msg) );
-    bot.on('messageUpdate', (msg, oldMsg) => onMessageUpdate(bot, network, channelsCache, msg, oldMsg)); 
+    bot.on('messageCreate', (msg) => onMessageCreate(bot, network, channelsCache, msg));
+    bot.on('messageUpdate', (msg, oldMsg) => onMessageUpdate(bot, network, channelsCache, msg, oldMsg));
     bot.on('messageDelete', (msg) => onMessageDelete(bot, network, channelsCache, msg));
 };

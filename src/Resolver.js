@@ -39,9 +39,9 @@ class Resolver {
 
         const mention = REGEXES.userMention.exec(args[0]);
 
-        const user = ((mention && mention[1]) && users.get(mention[1])) // User mention
+        const user = ((mention && mention[1] ) && users.get(mention[1])) // User mention
             || (REGEXES.id.test(args[0]) && users.get(args[0])) // User ID
-            || (args.all.indexOf('#') > -1 && users.find(u => `${u.username}#${u.discriminator}` === args.all) ) // Username + discrim
+            || (args.all.indexOf('#') > -1 && users.find(u => `${u.username}#${u.discriminator}` === args.all)) // Username + discrim
             || users.find(u => u.username === args.all) // Username
             || users.find(u => u.username.toLowerCase() === args.lower) // Username lowercase
             || users.find(u => u.username.includes(args.all)) // Username includes
@@ -111,10 +111,10 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const { roles } = guild;
 
-        const mention = REGEXES.roleMention.exec(args[0] );
+        const mention = REGEXES.roleMention.exec(args[0]);
 
-        const role = ( (mention && mention[1] ) && roles.get(mention[1])) // mention
-            || (REGEXES.id.test(args[0] ) && roles.get(args[0])) // id
+        const role = ((mention && mention[1]) && roles.get(mention[1])) // mention
+            || (REGEXES.id.test(args[0]) && roles.get(args[0])) // id
             || roles.find(m => m.name === args.all) // name
             || roles.find(m => m.name.toLowerCase() === args.lower) // name lower
             || roles.find(m => m.name.includes(args.all)) // name includes
@@ -138,7 +138,7 @@ class Resolver {
         }
 
         // Checking if args is an array, if it is not, converting it to an array.
-        if (!Array.isArray(args) ) {
+        if (!Array.isArray(args)) {
             args = `${args}`.split(' ');
         }
 
@@ -146,13 +146,13 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const { channels } = guild;
 
-        const mention = REGEXES.channelMention.exec(args[0] );
+        const mention = REGEXES.channelMention.exec(args[0]);
 
         const channel = ((mention && mention[1]) && channels.get(mention[1]))
             || (REGEXES.id.test(args[0]) && channels.get(args[0]))
             || channels.find(c => c.name === args.all) // name
             || channels.find(c => c.name.toLowerCase() === args.lower) // name lower
-            || channels.find(c => c.name.includes(args.all) ) // name includes
+            || channels.find(c => c.name.includes(args.all)) // name includes
             || channels.find(c => c.name.toLowerCase().includes(args.lower)) // name lower includes
             || null; // no channel found
 
@@ -176,7 +176,7 @@ class Resolver {
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
 
-        const guild = (REGEXES.id.test(args[0] ) && guilds.find(g => g.id === args[0] ) ) // ID
+        const guild = (REGEXES.id.test(args[0]) && guilds.find(g => g.id === args[0])) // ID
             || guilds.find(g => g.name === args.all) // Name
             || guilds.find(g => g.name.toLowerCase() === args.lower) // Lowercase name
             || guilds.find(g => g.name.includes(args.all)) // Includes name
